@@ -16,5 +16,9 @@ export default{
   },
   logout () {
     return authcall.post('http://127.0.0.1:3000/users/logout')
+  },
+  uploadS3(data)
+  {
+    return  authcall.post('http://127.0.0.1:3000/uploadS3', data)
   }
 }

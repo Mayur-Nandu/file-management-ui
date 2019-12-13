@@ -6,6 +6,9 @@
       <br>
       <br>
       <button @click="getFiles">Get Files</button>
+      <br>
+      <br>
+      <button @click="uploadS3">Upload TO  S3</button>
   </div>
 </template>
 
@@ -48,6 +51,19 @@ export default {
       const UserFiles = await services.getFiles();
       
       console.log(UserFiles);
+    },
+    async uploadS3 () {
+      const obj = this.uploadObj
+      try{
+        const uploadData= new FormData()
+        uploadData.append('file', obj.file)   
+        const response = await services.uploadS3(uploadData);
+      }
+      catch(err) {
+        if(err){
+          console.log(err);
+        }
+      }
     }
   }
 }
