@@ -25,9 +25,6 @@ export default {
       }
     }
   },
-  created () {
-    EventBus.$emit('checkLogedin', "false");
-  },
   methods: {
      async login () {
       const obj = this.loginobj
@@ -35,14 +32,19 @@ export default {
         console.log(obj);
         const response = await services.login(this.loginobj);
         // console.log(response);
+
+        // using cokies to store the headers
+         this.$cookies.set("x-auth-token", response.headers['x-auth-token'])
           authcall.interceptors.request.use(
-          config => {
-            config.headers['x-auth-token'] = response.headers['x-auth-token'];
-            return config
+            config => {
+              config.headers['x-auth-token'] = response.headers['x-auth-token'];
+              return config
           }
         )
-        // localStorage.setItem('logedinValue',true);
+        //to maintain state when not refreshed
         EventBus.$emit('checkLogedin', "true");
+        //to maintain state when refreshed
+        this.$cookies.set("checkLogedin", 'true')
         this.$router.push('/user')
       }
       catch(err) {

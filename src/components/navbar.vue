@@ -19,17 +19,17 @@ import {authcall} from '../../api/apiCall'
 export default {
 
   name: 'navbar',
-  mounted () {
-    EventBus.$on('checkLogedin',  (logedinValue)=>{
-      console.log(logedinValue);
-      this.logedin= logedinValue;
-    })
-  },
   data () {
     return {
       title: 'FileManage',
-      logedin: "false"
+      logedin: false
     }
+  },  
+  mounted () {
+  EventBus.$on('checkLogedin',  (logedinValue)=>{
+    this.logedin= logedinValue;
+  })
+  this.logedin=this.$cookies.get('checkLogedin')
   },
   methods : {
     logout(){
@@ -40,7 +40,11 @@ export default {
             return config
           }
         )
-        
+        this.$cookies.set("x-auth-token", '')
+        //to maintain state when  refreshed
+        this.$cookies.set("checkLogedin", 'false')
+        //to maintain state when not refreshed
+        EventBus.$emit('checkLogedin', "false");
         this.$router.push('/login')
     }
   }

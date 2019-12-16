@@ -16,6 +16,7 @@
           <img :src='image' alt="">
         </li>
       </ul>
+      <hr>
       <p>Files form S3</p>
       <ul>
         <li v-for="file in S3files" v-bind:key='file'>
@@ -107,6 +108,10 @@ export default {
 }
 ul {
   list-style-type: none;
+}
+li {
+    display: inline;
+    padding: 10px
 }
 button { 
   /* padding: 20px; */

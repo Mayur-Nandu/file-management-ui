@@ -32,7 +32,7 @@ export default {
         console.log(obj);
         const response = await services.signup(this.signupobj);
         console.log(response);
-        EventBus.$emit('checkLogedin', "true");
+        // this.$cookies.set("checkLogedin", 'true')
         this.$router.push('/login');
         return
       }
