@@ -7,35 +7,41 @@
       <router-link to="/Signup" tag="button">Signup</router-link>
     </span>
      <span class="btns" v-if="logedin === 'true'"> 
-      <router-link to="/login" tag="button">Logout</router-link>
+      <button tag="button" @click='logout'>Logout</button>
     </span>
   </div>
 </template>
 
 <script>
 import EventBus from '../event-bus';
+import {authcall} from '../../api/apiCall'
 
 export default {
+
   name: 'navbar',
   mounted () {
-    // this.logedin = localStorage.getItem('logedinValue') ;
-    // console.log(localStorage.getItem('logedinValue'))
-    // console.log(typeof(this.logedin))
     EventBus.$on('checkLogedin',  (logedinValue)=>{
       console.log(logedinValue);
       this.logedin= logedinValue;
     })
   },
-
-  // watch : {
-  //   logedin : (newValue, oldValue) => {
-  //    this.logedin=localStorage.getItem('logedinValue');
-  //   }
-  // },
   data () {
     return {
       title: 'FileManage',
       logedin: "false"
+    }
+  },
+  methods : {
+    logout(){
+      console.log("logout");
+      authcall.interceptors.request.use(
+          config => {
+            config.headers['x-auth-token'] = '';
+            return config
+          }
+        )
+        
+        this.$router.push('/login')
     }
   }
 }
