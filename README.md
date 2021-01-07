@@ -1,9 +1,9 @@
 # file-ui
 
-> A Vue.js project
+ A Vue.js project
 
 ## Build Setup
-
+to install run these command
 ``` bash
 # install dependencies
 npm install
